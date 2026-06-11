@@ -23,7 +23,7 @@ public class CharacterService : ICharacterService
     {
         try
         {
-            var character = new Character
+            Character character = new Character
             {
                 Name = dto.Name,
                 Gender = dto.Gender
@@ -44,7 +44,7 @@ public class CharacterService : ICharacterService
         }
     }
 
-    public async Task<List<Character>> GetCharactersAsync()
+    public async Task<List<CharacterDto>> GetCharactersAsync()
     {
         try
         {

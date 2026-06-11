@@ -19,14 +19,12 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Character -> Skills (1 to many)
         modelBuilder.Entity<Character>()
             .HasMany(c => c.Skills)
             .WithOne(s => s.Character)
             .HasForeignKey(s => s.CharacterId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Enum Gender config (optional but better explicit)
         modelBuilder.Entity<Character>()
             .Property(c => c.Gender)
             .HasConversion<string>();

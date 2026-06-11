@@ -33,5 +33,6 @@ app.UseHttpsRedirection();
 
 // endpoints registration
 app.RegisterCharacterMappingEndpoints();
+app.RegisterSkillsMappingEndpoints();
 
 app.Run();

@@ -44,7 +44,7 @@ public static class CharacterEndpoints
         return TypedResults.Ok(result);
     }
 
-    private static async Task<Results<Ok<List<Character>>, BadRequest<string>>> GetCharacters(
+    private static async Task<Results<Ok<List<CharacterDto>>, BadRequest<string>>> GetCharacters(
         ICharacterService characterService
     )
     {

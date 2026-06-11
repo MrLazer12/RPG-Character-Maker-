@@ -1,0 +1,8 @@
+namespace rpg_character.Models.DTO;
+
+public class SkillDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int Level { get; set; }
+}

@@ -6,5 +6,5 @@ namespace rpg_character.Services.CharacterService;
 public interface ICharacterService
 {
     Task<CreateCharacterDto> CreateCharacterAsync(CreateCharacterDto dto);
-    Task<List<Character>> GetCharactersAsync();
+    Task<List<CharacterDto>> GetCharactersAsync();
 }
