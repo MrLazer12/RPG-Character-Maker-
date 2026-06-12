@@ -8,10 +8,8 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options)
     {
-
     }
 
-    // DbSet properties expose tables for querying
     public DbSet<Character> Characters => Set<Character>();
     public DbSet<Skills> Skills => Set<Skills>();
 

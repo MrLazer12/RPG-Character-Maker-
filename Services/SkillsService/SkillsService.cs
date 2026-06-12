@@ -18,32 +18,39 @@ public class SkillsService : ISkillsService
         _logger = logger;
     }
 
-    public async Task<SkillResponseDto> AddSkillToCharacter(
+    public async Task<Skills> AddSkillToCharacter(
         int characterId,
         CreateSkillRequestDto dto
     )
     {
-        try
+        Skills skill = new Skills
         {
-            Skills skill = new Skills
-            {
-                Name = dto.Name,
-                Level = dto.Level
-            };
+            Name = dto.Name,
+            Level = dto.Level
+        };
 
-            var result = await _repository.AddSkillToCharacter(characterId, skill);
+        Skills result = await _repository.AddSkillToCharacter(characterId, skill);
 
-            return new SkillResponseDto
-            {
-                Id = result.Id,
-                Name = result.Name,
-                Level = result.Level
-            };
-        }
-        catch (Exception ex)
+        return new Skills
         {
-            _logger.LogError(ex, "Error creating character with name {Name}", dto.Name);
-            throw;
-        }
+            Id = result.Id,
+            Name = result.Name,
+            Level = result.Level
+        };
+    }
+
+    public async Task<bool> DeleteSkillFromCharacter(
+        int characterId,
+        int skillId
+    )
+    {
+        Skills? skill = await _repository.GetByIdAsync(skillId, characterId);
+
+        if (skill == null)
+            return false;
+
+        await _repository.DeleteSkillFromCharacter(skill);
+
+        return true;
     }
 }

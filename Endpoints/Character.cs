@@ -29,7 +29,7 @@ public static class CharacterEndpoints
             });
     }
 
-    private static async Task<Results<Ok<CreateCharacterDto>, BadRequest<string>>> CreateCharacter(
+    private static async Task<Results<Ok<CharacterDto>, BadRequest<string>>> CreateCharacter(
         CreateCharacterDto dto,
         ICharacterService characterService
     )

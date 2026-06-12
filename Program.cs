@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using rpg_character.Data;
 using rpg_character.Endpoints;
 using rpg_character.Extensions;
+using rpg_character.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// endpoints registration
+// endpoints injection
 app.RegisterCharacterMappingEndpoints();
 app.RegisterSkillsMappingEndpoints();
+
+// middlewares injection
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();

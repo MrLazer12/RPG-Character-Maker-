@@ -28,4 +28,18 @@ public class SkillsRepository : ISkillsRepository
 
         return skill;
     }
+
+    public async Task DeleteSkillFromCharacter(Skills skill)
+    {
+        _context.Skills.Remove(skill);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<Skills?> GetByIdAsync(int skillId, int characterId)
+    {
+        return await _context.Skills
+            .FirstOrDefaultAsync(s =>
+                s.Id == skillId &&
+                s.CharacterId == characterId);
+    }
 }

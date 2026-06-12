@@ -5,5 +5,6 @@ namespace rpg_character.Services.SkillsService;
 
 public interface ISkillsService
 {
-    Task<SkillResponseDto> AddSkillToCharacter(int characterId, CreateSkillRequestDto dto);
+    Task<Skills> AddSkillToCharacter(int characterId, CreateSkillRequestDto dto);
+    Task<bool> DeleteSkillFromCharacter(int characterId, int skillId);
 }

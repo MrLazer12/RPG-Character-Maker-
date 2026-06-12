@@ -1,4 +1,3 @@
-
 using rpg_character.Models;
 using rpg_character.Models.DTO;
 using rpg_character.Repository.CharacterRepository;
@@ -8,52 +7,46 @@ namespace rpg_character.Services.CharacterService;
 public class CharacterService : ICharacterService
 {
     private readonly ICharacterRepository _repository;
-    private readonly ILogger<CharacterService> _logger;
 
-    public CharacterService(
-        ICharacterRepository repository,
-        ILogger<CharacterService> logger
-    )
+    public CharacterService(ICharacterRepository repository)
     {
         _repository = repository;
-        _logger = logger;
     }
 
-    public async Task<CreateCharacterDto> CreateCharacterAsync(CreateCharacterDto dto)
+    public async Task<CharacterDto> CreateCharacterAsync(CreateCharacterDto dto)
     {
-        try
+        var character = new Character
         {
-            Character character = new Character
-            {
-                Name = dto.Name,
-                Gender = dto.Gender
-            };
+            Name = dto.Name,
+            Gender = dto.Gender
+        };
 
-            var created = await _repository.CreateCharacter(character);
+        Character created = await _repository.CreateCharacter(character);
 
-            return new CreateCharacterDto
-            {
-                Name = created.Name,
-                Gender = created.Gender
-            };
-        }
-        catch (Exception ex)
+        return new CharacterDto
         {
-            _logger.LogError(ex, "Error creating character with name {Name}", dto.Name);
-            throw;
-        }
+            Id = created.Id,
+            Name = created.Name,
+            Gender = created.Gender.ToString(),
+            Skills = new List<SkillDto>()
+        };
     }
 
     public async Task<List<CharacterDto>> GetCharactersAsync()
     {
-        try
+        var characters = await _repository.GetCharacters();
+
+        return characters.Select(c => new CharacterDto
         {
-            return await _repository.GetCharacters();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error while getting list of characters");
-            throw;
-        }
+            Id = c.Id,
+            Name = c.Name,
+            Gender = c.Gender.ToString(),
+            Skills = c.Skills.Select(s => new SkillDto
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Level = s.Level
+            }).ToList()
+        }).ToList();
     }
 }
